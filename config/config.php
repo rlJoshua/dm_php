@@ -1,6 +1,6 @@
 <?php
 
-define('HOST','http://192.168.99.101:81');
+define('HOST','mysql');
 define('DBNAME','dm_php');
 define('USER','admin');
 define('PW','skywalk');

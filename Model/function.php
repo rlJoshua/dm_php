@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require (__DIR__.'/../config/config.php');
 
 
@@ -47,11 +47,36 @@ function connection($username, $password){
     try{
         $db = $pdo->prepare("select users.id, users.username from users 
         where users.username = :username and users.password = :password");
-        $db->execute([':username'=>$username, ':password'=>$password]);
+        $db->execute([':username' => $username, ':password' => $password]);
         $user = $db->fetch(PDO::FETCH_OBJ);
-        $_SESSION['user'] = $user;
-
+        connectUser($user);
     }catch (PDOException $e){
         echo "Erreur de connection users". $e->getMessage();
     }
+}
+
+function connectUser($user){
+    if($user){
+        $_SESSION['user'] = $user;
+    }
+}
+
+function getAllCategories(){
+
+    $pdo = connectPdo();
+    try{
+
+        $db = $pdo->prepare("select categories.id, categories.name from categories");
+        $db->execute();
+        $categories = $db->fetchALL(PDO::FETCH_OBJ);
+
+    }catch (PDOException $e){
+        echo"Erreur de connexion". $e->getMessage();
+    }
+
+    return $categories;
+}
+
+function addPost($title, $img, $content, $category, $user){
+
 }

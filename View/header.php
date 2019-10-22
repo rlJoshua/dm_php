@@ -1,4 +1,6 @@
-<!doctype html>
+<?php
+
+?>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -26,11 +28,29 @@
                 <a class="nav-link" href="/posts?ac=display">Articles<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/makepost">Créer un article</a>
+                <a class="nav-link" href="/posts?ac=addpost">Créer un article</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user?ac=connection">Connexion</a>
-            </li>
+            <?php
+            if(!isset($_SESSION['user'])){
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?ac=login">Connexion</a>
+                </li>
+            <?php
+            }
+            ?>
+            <?php
+            if(isset($_SESSION['user'])){
+                ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?ac=profil">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?ac=logout">Deconnection</a>
+                </li>
+                <?php
+            }
+            ?>
         </ul>
     </div>
 </nav>

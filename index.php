@@ -1,4 +1,9 @@
 <?php
+if(PHP_SESSION_NONE === session_status()){
+    session_start();
+}
+
+include ('view/header.php');
 
 $request = '/';
 
@@ -7,7 +12,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
     $request = $request[0];
 }
 
-include ('view/header.php');
+
 
 switch ($request){
     case '/posts':
@@ -19,9 +24,6 @@ switch ($request){
         break;
 
 }
-
-
-
 
 
 include('view/footer.php');

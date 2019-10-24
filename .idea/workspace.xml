@@ -2,17 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="567aa889-143f-45eb-a0d2-c3b88adf2c3e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/View/addpost.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/View/profil.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/View/adduser.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/View/setpost.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controler/postsControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/postsControler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controler/usersControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/usersControler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/function.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/function.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/addpost.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/addpost.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/View/connection.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/connection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dm_php.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dm_php.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/post.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/post.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,13 +33,14 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../src" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -79,7 +78,10 @@
       <workItem from="1571651340897" duration="8446000" />
       <workItem from="1571662620215" duration="5520000" />
       <workItem from="1571691561286" duration="6198000" />
-      <workItem from="1571729807801" duration="13995000" />
+      <workItem from="1571729807801" duration="15939000" />
+      <workItem from="1571779475432" duration="793000" />
+      <workItem from="1571814109881" duration="16965000" />
+      <workItem from="1571902844873" duration="10449000" />
     </task>
     <servers />
   </component>

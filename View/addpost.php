@@ -1,14 +1,14 @@
 <div class="title" xmlns="http://www.w3.org/1999/html">Ajout de posts</div>
 
-<form action="http://192.168.99.101/posts?ac=createpost" id="form-addpost" method="post">
+<form action="/posts?ac=createpost" id="form-addpost" method="post" enctype="multipart/form-data">
     <label for="title">Titre</label><br />
     <input class="i-title" type="text" name="title" required/>
     <br />
     <label for="content">Contenue</label><br />
-    <textarea class="i-password" name="content" required></textarea>
+    <textarea class="i-content" name="content" required></textarea>
     <br />
     <label for="category">Catégories</label><br />
-    <select class="i-title" type="select" form="form-addpost" name="category">
+    <select class="i-category" type="select" form="form-addpost" name="category">
         <?php
         foreach ($categories as $category){
             echo "<option value=$category->id>$category->name</option>";

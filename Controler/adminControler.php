@@ -13,7 +13,7 @@ switch ($action) {
         }
         if($authorize){
             if(isset($_REQUEST['id'])){
-                $id = $_REQUEST['id'];
+                $id = sanitize($_REQUEST['id']);
                 $name = getCategoryNameById($id);
                 deleteCategory($id);
                 $message = "La catégorie $name à été supprimé !";
@@ -31,7 +31,7 @@ switch ($action) {
             include(__DIR__.'/../View/post.php');
         }
         if($authorize){
-            $name = $_REQUEST['name'];
+            $name = sanitize($_REQUEST['name']);
             addCategory($name);
             $categories = getCategories();
             include(__DIR__.'/../View/category.php');
@@ -46,8 +46,8 @@ switch ($action) {
             include(__DIR__.'/../View/post.php');
         }
         if($authorize){
-            $id = $_REQUEST['idcat'];
-            $name = $_REQUEST['namecat'];
+            $id = sanitize($_REQUEST['idcat']);
+            $name = sanitize($_REQUEST['namecat']);
             setCategory($id, $name);
             $categories = getCategories();
             include(__DIR__.'/../View/category.php');

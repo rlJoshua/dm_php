@@ -160,15 +160,45 @@ function getUserByName($username){
     }
 }
 
-function setPassword($id,$username, $password){
+function setLogin($id, $username){
     $pdo = connectPdo();
-    $password = password_hash($password, PASSWORD_DEFAULT);
-    try{
-        $db = $pdo->prepare("update users set users.password = :newpass 
-        where users.username = :username and users.id = :id");
-        $db->execute([':newpass' => $password, ':username'=>$username, ':id'=>$id]);
-    }catch (PDOException $e){
-        echo "Erreur de connection". $e->getMessage();
+    $testuser = getUserByName($username);
+    if($testuser === null) {
+        try {
+            $db = $pdo->prepare("update users set users.username = :username where users.id = :id");
+            $db->execute([':username' => $username, ':id' => $id]);
+            $_SESSION['user']->username = $username;
+            $msg['create'] = true;
+            return $msg;
+        } catch (PDOException $e) {
+            echo "Erreur de connection" . $e->getMessage();
+        }
+    }
+    if($testuser !== null){
+        $msg['create'] = false;
+        $msg['message'] = "Le Login existe déjà";
+        return $msg;
+    }
+}
+
+function setPassword($id, $password, $conf_pass){
+    if($password === $conf_pass){
+        $pdo = connectPdo();
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        try{
+            $db = $pdo->prepare("update users set users.password = :password 
+        where users.id = :id");
+            $db->execute([':password' => $password, ':id'=>$id]);
+            $msg['create'] = true;
+            return $msg;
+        }catch (PDOException $e){
+            echo "Erreur de connection". $e->getMessage();
+        }
+    }
+    if($password !== $conf_pass){
+        $msg['create'] = false;
+        $msg['message'] = "Les mots de passe sont différents";
+        return $msg;
     }
 }
 

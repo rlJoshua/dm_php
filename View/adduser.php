@@ -1,7 +1,7 @@
 <title>Blog - Subscribe</title>
 <div class="title" xmlns="http://www.w3.org/1999/html">Inscription</div>
 
-<form action="/user?ac=createuser" id="form-addpost" method="post" enctype="multipart/form-data">
+<form class="i-form" action="/user?ac=createuser" id="form-addpost" method="post" enctype="multipart/form-data">
     <label for="username">Login</label><br />
     <input class="i-login" type="text" name="username" required/>
     <br />

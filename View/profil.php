@@ -3,4 +3,10 @@
 <?php
 if(isset($user)){
     echo "Username : $user->username";
+?>
+    <br />
+    <br />
+    <a class="supprcat" href="/user?ac=setuser">Modifier profil</a>
+<?php
 }
+

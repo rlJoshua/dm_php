@@ -15,8 +15,8 @@ switch ($action) {
             include (__DIR__.'/../View/profil.php');
         }
         if(isset($_REQUEST['user'])){
-            $username = $_REQUEST['user'];
-            $password = $_REQUEST['password'];
+            $username = sanitize($_REQUEST['user']);
+            $password = sanitize($_REQUEST['password']);
             connection($username, $password);
             $user = $_SESSION['user'];
             if($user){
@@ -38,9 +38,9 @@ switch ($action) {
         break;
 
     case 'createuser':
-        $username = $_REQUEST['username'];
-        $password = $_REQUEST['password'];
-        $conf_pass = $_REQUEST['conf_pass'];
+        $username = sanitize($_REQUEST['username']);
+        $password = sanitize($_REQUEST['password']);
+        $conf_pass = sanitize($_REQUEST['conf_pass']);
         $add = addUser($username, $password, $conf_pass);
         if ($add['create']){
             include (__DIR__.'/../View/profil.php');

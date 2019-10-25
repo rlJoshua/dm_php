@@ -20,31 +20,28 @@ function connectPdo(){
     }
 }
 
-function getAllPosts(){
+function getPosts(){
 
     $pdo = connectPdo();
     try{
 
         $db = $pdo->prepare("select posts.id, posts.imagePath, posts.title, posts.content, idCategory, 
-        categories.name as categoryname, idUser, users.username 
+        categories.name as categoryname, idUser, users.username  as username
         from posts LEFT JOIN categories on posts.idCategory = categories.id 
         LEFT JOIN users on idUser = users.id ORDER BY posts.id DESC");
         $db->execute();
         $posts = $db->fetchALL(PDO::FETCH_OBJ);
-
+        return $posts;
     }catch (PDOException $e){
         echo"Erreur de connexion". $e->getMessage();
     }
-
-
-    return $posts;
 }
 
 function getPostById($id){
     $pdo = connectPdo();
     try {
         $db = $pdo->prepare(" SELECT posts.id, posts.imagePath, posts.title, posts.content, idCategory, 
-        categories.name as categoryname, idUser, users.username 
+        categories.name as categoryname, idUser, users.username as username 
         from posts LEFT JOIN categories on posts.idCategory = categories.id 
         LEFT JOIN users on idUser = users.id WHERE posts.id = :id");
         $db->execute([':id'=>$id]);
@@ -77,7 +74,7 @@ function connectUser($user, $password){
     }
 }
 
-function getAllCategories(){
+function getCategories(){
 
     $pdo = connectPdo();
     try{
@@ -93,14 +90,13 @@ function getAllCategories(){
     return $categories;
 }
 
-function addPost($title, $img, $content, $category, $user){
+function addPost($title, $img, $content, $category, $idUser){
     $pdo = connectPdo();
     $img = getPathimage($img);
     try{
         $db = $pdo->prepare("insert into posts (imagePath, title, content, idCategory, idUser) values
         (:imagePath, :title, :content, :idCategory, :idUser)");
-        $db->execute([':imagePath' => $img, ':title' => $title, ':content'=>$content, ':idCategory'=>$category, ':idUser'=>$user]);
-        connectUser($user);
+        $db->execute([':imagePath' => $img, ':title' => $title, ':content'=>$content, ':idCategory'=>$category, ':idUser'=>$idUser]);
     }catch (PDOException $e){
         echo "Erreur de connection". $e->getMessage();
     }
@@ -174,4 +170,66 @@ function setPassword($id,$username, $password){
     }catch (PDOException $e){
         echo "Erreur de connection". $e->getMessage();
     }
+}
+
+function setPost($title, $content, $category, $idPost){
+    $pdo = connectPdo();
+
+    try{
+        $db = $pdo->prepare("update posts 
+        set posts.title = :title, posts.content = :content, posts.idCategory = :category
+        where posts.id = :idPost");
+        $db->execute([':title' => $title, ':content'=>$content, ':category'=>$category, ':idPost'=>$idPost]);
+        $post = getPostById($idPost);
+        return $post;
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
+function getComments($idPost){
+    $pdo = connectPdo();
+    try{
+
+        $db = $pdo->prepare("select comments.id, comments.content, comments.idUser, users.username as username
+        from comments LEFT JOIN users ON comments.idUser = users.id 
+        WHERE comments.idPost = :idPost ORDER BY id");
+        $db->execute([':idPost'=>$idPost]);
+        $comments = $db->fetchALL(PDO::FETCH_OBJ);
+        return $comments;
+    }catch (PDOException $e){
+        echo"Erreur de connexion". $e->getMessage();
+    }
+}
+
+function addComment($content, $idPost, $idUser){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("insert into comments (content, idPost, idUser) 
+        values (:content, :idPost, :idUser)");
+        $db->execute([':content' => $content, ':idPost' => $idPost, ':idUser'=>$idUser]);
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
+function getAuthorize($idUser, $id){
+    $authorize = false;
+
+    if($idUser === $id){
+        $authorize = true;
+    }
+    if ($idUser !== $id){
+        $authorize = false;
+    }
+    if ($idUser === "1"){
+        $authorize = true;
+    }
+    return $authorize;
+}
+
+function sanitize($input): string
+{
+    $input = trim($input);
+    return htmlspecialchars($input);
 }

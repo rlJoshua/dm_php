@@ -45,6 +45,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/user?ac=profil">Profil</a>
                 </li>
+                <?php
+                if($_SESSION['user']->id === "1"){
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin?ac=category">Catégories</a>
+                    </li>
+                    <?php
+                }
+                ?>
                 <li class="nav-item">
                     <a class="nav-link" href="/user?ac=logout">Deconnection</a>
                 </li>

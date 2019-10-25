@@ -22,7 +22,9 @@ switch ($request){
     case '/user':
         include('Controler/usersControler.php');
         break;
-
+    case '/admin':
+        include('Controler/adminControler.php');
+        break;
 }
 
 

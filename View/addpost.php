@@ -1,4 +1,4 @@
-<div class="title" xmlns="http://www.w3.org/1999/html">Ajout de posts</div>
+<div class="title" xmlns="http://www.w3.org/1999/html">Ajouter un article</div>
 
 <form action="/posts?ac=createpost" id="form-addpost" method="post" enctype="multipart/form-data">
     <label for="title">Titre</label><br />

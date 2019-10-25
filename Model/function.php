@@ -20,21 +20,24 @@ function connectPdo(){
     }
 }
 
-function getPosts(){
-
+function getPosts($page){
     $pdo = connectPdo();
+    $nbp = 10;
+    $start = $page*$nbp-1;
     try{
-
         $db = $pdo->prepare("select posts.id, posts.imagePath, posts.title, posts.content, idCategory, 
         categories.name as categoryname, idUser, users.username  as username
         from posts LEFT JOIN categories on posts.idCategory = categories.id 
-        LEFT JOIN users on idUser = users.id ORDER BY posts.id DESC");
+        LEFT JOIN users on idUser = users.id ORDER BY posts.id DESC LIMIT :start, :nbp");
+        $db->bindParam(':start', $start, PDO::PARAM_INT);
+        $db->bindParam(':nbp', $nbp, PDO::PARAM_INT);
         $db->execute();
         $posts = $db->fetchALL(PDO::FETCH_OBJ);
         return $posts;
     }catch (PDOException $e){
         echo"Erreur de connexion". $e->getMessage();
     }
+
 }
 
 function getPostById($id){
@@ -128,7 +131,6 @@ function addUser($username, $password, $conf_pass){
             try{
                 $db = $pdo->prepare("insert into users (username, password) values (:username, :password)");
                 $db->execute([':username' => $username, ':password' => $password]);
-                connection($username, $password);
                 $msg['create'] = true;
                 return $msg;
             }catch (PDOException $e){
@@ -217,6 +219,18 @@ function setPost($title, $content, $category, $idPost){
     }
 }
 
+function getNbPosts(){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("select posts.id from posts");
+        $db->execute();
+        $count = $db->rowCount();
+        return $count;
+    }catch (PDOException $e){
+        echo"Erreur de connexion". $e->getMessage();
+    }
+}
+
 function getComments($idPost){
     $pdo = connectPdo();
     try{
@@ -297,6 +311,18 @@ function getAuthorize($idUser, $id){
     if ($idUser === "1"){
         $authorize = true;
     }
+    return $authorize;
+}
+
+function getLedgitPage($page){
+    $authorize = false;
+    if(isset($_REQUEST['page']) && !empty($_REQUEST['page']) && $_REQUEST['page']>0){
+        $authorize = true;
+    }
+    if(!isset($_REQUEST['page']) || empty($_REQUEST['page'])){
+        $authorize = false;
+    }
+
     return $authorize;
 }
 

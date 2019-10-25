@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/posts?ac=display">Articles<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/posts?ac=display&page=1">Articles<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/posts?ac=addpost">Créer un article</a>

@@ -43,7 +43,8 @@ switch ($action) {
         $conf_pass = sanitize($_REQUEST['conf_pass']);
         $add = addUser($username, $password, $conf_pass);
         if ($add['create']){
-            include (__DIR__.'/../View/profil.php');
+            $error = "Utilisateur ajouté ! Connecter-vous !";
+            include (__DIR__.'/../View/connection.php');
         }
         if (!$add['create']){
             $error = $add['message'];

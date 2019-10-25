@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="567aa889-143f-45eb-a0d2-c3b88adf2c3e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/View/setuser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controler/adminControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/adminControler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controler/postsControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/postsControler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controler/usersControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/usersControler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/function.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/function.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/adduser.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/adduser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/profil.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/profil.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/asset/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/asset/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/header.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,7 +80,7 @@
       <workItem from="1571814109881" duration="16965000" />
       <workItem from="1571902844873" duration="29450000" />
       <workItem from="1571991033705" duration="5366000" />
-      <workItem from="1571998673681" duration="6331000" />
+      <workItem from="1571998673681" duration="13880000" />
     </task>
     <servers />
   </component>

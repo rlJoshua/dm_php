@@ -1,16 +1,16 @@
 <?php
 include(__DIR__.'/../Model/function.php');
 $action = $_REQUEST['ac'];
+$user = $_SESSION['user'];
+$authorize = getAuthorize($user->id, 1);
+
+if(!$authorize){
+    $action = 'post';
+}
 
 switch ($action) {
 
     case 'category':
-        $user = $_SESSION['user'];
-        $authorize = getAuthorize($user->id, 1);
-        if(!$authorize){
-            $posts = getPosts();
-            include(__DIR__.'/../View/post.php');
-        }
         if($authorize){
             if(isset($_REQUEST['id'])){
                 $id = sanitize($_REQUEST['id']);
@@ -24,12 +24,6 @@ switch ($action) {
         break;
 
     case 'addcategory':
-        $user = $_SESSION['user'];
-        $authorize = getAuthorize($user->id, 1);
-        if(!$authorize){
-            $posts = getPosts();
-            include(__DIR__.'/../View/post.php');
-        }
         if($authorize){
             $name = sanitize($_REQUEST['name']);
             addCategory($name);
@@ -39,12 +33,6 @@ switch ($action) {
         break;
 
     case 'setcategory':
-        $user = $_SESSION['user'];
-        $authorize = getAuthorize($user->id, 1);
-        if(!$authorize){
-            $posts = getPosts();
-            include(__DIR__.'/../View/post.php');
-        }
         if($authorize){
             $id = sanitize($_REQUEST['idcat']);
             $name = sanitize($_REQUEST['namecat']);
@@ -52,6 +40,17 @@ switch ($action) {
             $categories = getCategories();
             include(__DIR__.'/../View/category.php');
         }
+        break;
+
+    case 'post':
+        if(getLedgitPage($_REQUEST['page'])){
+            $page = intval($_REQUEST['page']);
+        }
+        if(!getLedgitPage($_REQUEST['page'])){
+            $page = 1;
+        }
+        $posts = getPosts($page);
+        include(__DIR__.'/../View/post.php');
         break;
 
 }

@@ -7,7 +7,13 @@ switch ($action) {
     case 'display':
         $user = $_SESSION['user'];
         if(!isset($_REQUEST['id'])){
-            $posts = getPosts();
+            if(getLedgitPage($_REQUEST['page'])){
+                $page = intval($_REQUEST['page']);
+            }
+            if(!getLedgitPage($_REQUEST['page'])){
+                $page = 1;
+            }
+            $posts = getPosts($page);
             include(__DIR__.'/../View/post.php');
         }
         if(isset($_REQUEST['id'])){

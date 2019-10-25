@@ -213,6 +213,48 @@ function addComment($content, $idPost, $idUser){
     }
 }
 
+function addCategory($name){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("insert into categories (categories.name) values (:name)");
+        $db->execute([':name' => $name]);
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
+function setCategory($id, $name){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("update categories set categories.name = :namecat where categories.id = :id ");
+        $db->execute([':namecat' => $name, ':id'=>$id]);
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
+function getCategoryNameById($id){
+    $pdo = connectPdo();
+    try {
+        $db = $pdo->prepare(" SELECT categories.name FROM categories where categories.id=:id");
+        $db->execute([':id'=>$id]);
+        $req = $db->fetch(PDO::FETCH_OBJ);
+        return $req->name;
+    }catch (PDOException $e){
+        echo "Erreur de connection users". $e->getMessage();
+    }
+}
+
+function deleteCategory($idCategory){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("delete FROM categories WHERE categories.id = :idCategory");
+        $db->execute([':idCategory' => $idCategory]);
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
 function getAuthorize($idUser, $id){
     $authorize = false;
 

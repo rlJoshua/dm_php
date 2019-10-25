@@ -1,4 +1,5 @@
-<div class="title">Connection</div>
+<title>Blog - Connection</title>
+<div class="title">Connexion</div>
 <form action="/user?ac=profil" method="post">
     <label for="user">Login</label><br />
     <input class="i-username" type="text" name="user" required/>

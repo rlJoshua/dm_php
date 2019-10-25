@@ -16,6 +16,7 @@
 
     <!-- Link Script -->
     <script src="asset/js/bootstrap.min.js"></script>
+    <script src="asset/js/function.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">

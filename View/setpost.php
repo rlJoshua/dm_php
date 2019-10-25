@@ -1,3 +1,4 @@
+<title>Blog - Posts</title>
 <div class="title" xmlns="http://www.w3.org/1999/html">Modifier un article</div>
 
 <form action="/posts?ac=updatepost" id="form-setpost" method="post" enctype="multipart/form-data">

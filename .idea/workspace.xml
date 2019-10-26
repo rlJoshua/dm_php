@@ -7,7 +7,12 @@
       <change beforePath="$PROJECT_DIR$/Controler/postsControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/postsControler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controler/usersControler.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controler/usersControler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/function.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/function.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/View/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/addpost.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/addpost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/post.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/View/setpost.php" beforeDir="false" afterPath="$PROJECT_DIR$/View/setpost.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asset/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/asset/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asset/js/function.js" beforeDir="false" afterPath="$PROJECT_DIR$/asset/js/function.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dm_php.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dm_php.sql" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +85,7 @@
       <workItem from="1571814109881" duration="16965000" />
       <workItem from="1571902844873" duration="29450000" />
       <workItem from="1571991033705" duration="5366000" />
-      <workItem from="1571998673681" duration="13880000" />
+      <workItem from="1571998673681" duration="22543000" />
     </task>
     <servers />
   </component>

@@ -19,3 +19,6 @@ textarea{resize: none; height: 250px;}
 .comment{padding-bottom: 30px; padding-top: 30px; border: solid #1F618D 1px; padding-left: 20px;width: 80%;}
 .p-username{font-style: italic;margin-top: 10px;}
 .i-form{margin-top: 20px; width:90%; }
+.p-pagination{margin: auto; width: fit-content;}
+.sub-del{background-color: #A93226}
+.sub-del a {width: min-content}

@@ -23,7 +23,7 @@ function connectPdo(){
 function getPosts($page){
     $pdo = connectPdo();
     $nbp = 10;
-    $start = $page*$nbp-1;
+    $start = ($page-1)*$nbp;
     try{
         $db = $pdo->prepare("select posts.id, posts.imagePath, posts.title, posts.content, idCategory, 
         categories.name as categoryname, idUser, users.username  as username
@@ -294,6 +294,27 @@ function deleteCategory($idCategory){
     try{
         $db = $pdo->prepare("delete FROM categories WHERE categories.id = :idCategory");
         $db->execute([':idCategory' => $idCategory]);
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
+function deletePost($idPost){
+    $pdo = connectPdo();
+    deleteCommentsByPost($idPost);
+    try{
+        $db = $pdo->prepare("delete FROM posts WHERE posts.id = :idPost");
+        $db->execute([':idPost' => $idPost]);
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+}
+
+function deleteCommentsByPost($idPost){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("delete FROM comments WHERE comments.idPost = :idPost");
+        $db->execute([':idPost' => $idPost]);
     }catch (PDOException $e){
         echo "Erreur de connection". $e->getMessage();
     }

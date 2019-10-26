@@ -26,6 +26,11 @@
     <input type="hidden" value="<?php echo $post->id?>" name="idPost">
     <input class="i-sub" type="submit" value="Modifier l'article">
 </form>
+
+<form action="/posts?ac=deletepost" id="delpost" method="post">
+    <input type="hidden" value="<?php echo $post->id?>" name="idPost">
+    <input class="i-sub sub-del" onclick="return confirmSuppr()" form="delpost" type="submit" value="Supprimer l'article">
+</form>
 <?php
 if (isset($error)){
     echo $error;

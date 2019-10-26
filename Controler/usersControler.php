@@ -1,7 +1,7 @@
 <?php
 
 include(__DIR__.'/../Model/function.php');
-$action = $_REQUEST['ac'];
+$action = $_GET['ac'];
 
 switch ($action) {
 
@@ -14,9 +14,9 @@ switch ($action) {
             $user = $_SESSION['user'];
             include (__DIR__.'/../View/profil.php');
         }
-        if(isset($_REQUEST['user'])){
-            $username = sanitize($_REQUEST['user']);
-            $password = sanitize($_REQUEST['password']);
+        if(isset($_POST['user'])){
+            $username = sanitize($_POST['user']);
+            $password = sanitize($_POST['password']);
             connection($username, $password);
             $user = $_SESSION['user'];
             if($user){
@@ -31,6 +31,7 @@ switch ($action) {
 
     case 'logout':
         unset($_SESSION['user']);
+        include(__DIR__.'/../View/connection.php');
         break;
 
     case 'adduser':
@@ -38,9 +39,9 @@ switch ($action) {
         break;
 
     case 'createuser':
-        $username = sanitize($_REQUEST['username']);
-        $password = sanitize($_REQUEST['password']);
-        $conf_pass = sanitize($_REQUEST['conf_pass']);
+        $username = sanitize($_POST['username']);
+        $password = sanitize($_POST['password']);
+        $conf_pass = sanitize($_POST['conf_pass']);
         $add = addUser($username, $password, $conf_pass);
         if ($add['create']){
             $error = "Utilisateur ajouté ! Connecter-vous !";
@@ -63,29 +64,39 @@ switch ($action) {
         break;
 
     case 'setlogin':
-        $user = $_SESSION['user'];
-        $username = sanitize($_REQUEST['login']);
-        $set = setLogin($user->id, $username);
-        if ($set['create']){
-            include (__DIR__.'/../View/profil.php');
+        if(isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+            $username = sanitize($_POST['login']);
+            $set = setLogin($user->id, $username);
+            if ($set['create']) {
+                include(__DIR__ . '/../View/profil.php');
+            }
+            if (!$set['create']) {
+                $errorlogin = $set['message'];
+                include(__DIR__ . '/../View/setuser.php');
+            }
         }
-        if (!$set['create']){
-            $errorlogin = $set['message'];
-            include (__DIR__.'/../View/setuser.php');
+        if(!isset($_SESSION['user'])){
+            include (__DIR__.'/../View/connection.php');
         }
         break;
 
     case 'setpassword':
-        $user = $_SESSION['user'];
-        $password = sanitize($_REQUEST['password']);
-        $conf_pass = sanitize($_REQUEST['conf_pass']);
-        $set = setPassword($user->id, $password, $conf_pass);
-        if ($set['create']){
-            include (__DIR__.'/../View/profil.php');
+        if(isset($_SESSION['user'])){
+            $user = $_SESSION['user'];
+            $password = sanitize($_POST['password']);
+            $conf_pass = sanitize($_POST['conf_pass']);
+            $set = setPassword($user->id, $password, $conf_pass);
+            if ($set['create']){
+                include (__DIR__.'/../View/profil.php');
+            }
+            if (!$set['create']){
+                $errorpass = $set['message'];
+                include (__DIR__.'/../View/setuser.php');
+            }
         }
-        if (!$set['create']){
-            $errorpass = $set['message'];
-            include (__DIR__.'/../View/setuser.php');
+        if(!isset($_SESSION['user'])){
+            include (__DIR__.'/../View/connection.php');
         }
 }
 

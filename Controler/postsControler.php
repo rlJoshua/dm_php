@@ -1,25 +1,27 @@
 <?php
 include(__DIR__.'/../Model/function.php');
-$action = $_REQUEST['ac'];
+$action = $_GET['ac'];
 
 switch ($action) {
 
     case 'display':
         $user = $_SESSION['user'];
-        if(!isset($_REQUEST['id'])){
-            if(getLedgitPage($_REQUEST['page'])){
-                $page = intval($_REQUEST['page']);
+        if(!isset($_GET['id'])){
+            if(getLedgitPage($_GET['page'])){
+                $page = intval($_GET['page']);
             }
-            if(!getLedgitPage($_REQUEST['page'])){
+            if(!getLedgitPage($_GET['page'])){
                 $page = 1;
             }
+            $nbpages = ceil(getNbPosts()/10);
             $posts = getPosts($page);
             include(__DIR__.'/../View/post.php');
         }
-        if(isset($_REQUEST['id'])){
-            $postv = getPostById($_REQUEST['id']);
+        if(isset($_GET['id'])){
+            $postv = getPostById($_GET['id']);
             $authorize = getAuthorize($user->id, $postv->idUser);
             $comments = getComments($postv->id);
+            $nbpages = ceil(getNbPosts()/10);
             include(__DIR__.'/../View/post.php');
         }
         break;
@@ -27,7 +29,7 @@ switch ($action) {
     case 'setpost':
         if(isset($_SESSION['user'])){
             $user = $_SESSION['user'];
-            $id = $_REQUEST['id'];
+            $id = $_GET['id'];
             $post = getPostById($id);
             $authorize = getAuthorize($user->id, $post->idUser);
             if($authorize) {
@@ -46,15 +48,20 @@ switch ($action) {
         break;
 
     case 'updatepost':
-        $user = $_SESSION['user'];
-        $title = sanitize($_REQUEST['title']);
-        $content= sanitize($_REQUEST['content']);
-        $category = sanitize($_REQUEST['category']);
-        $idPost = sanitize($_REQUEST['idPost']);
-        $postv = setPost($title, $content, $category, $idPost);
-        $authorize = getAuthorize($user->id, $postv->idUser);
-        $comments = getComments($postv->id);
-        include(__DIR__.'/../View/post.php');
+        if(isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+            $title = sanitize($_POST['title']);
+            $content = sanitize($_POST['content']);
+            $category = sanitize($_POST['category']);
+            $idPost = sanitize($_POST['idPost']);
+            $postv = setPost($title, $content, $category, $idPost);
+            $authorize = getAuthorize($user->id, $postv->idUser);
+            $comments = getComments($postv->id);
+            include(__DIR__ . '/../View/post.php');
+        }
+        if(!isset($_SESSION['user'])){
+            include (__DIR__.'/../View/connection.php');
+        }
         break;
 
     case 'addpost':
@@ -69,24 +76,48 @@ switch ($action) {
         break;
 
     case 'createpost':
-        $title = sanitize($_REQUEST['title']);
-        $content= sanitize($_REQUEST['content']);
-        $category = sanitize($_REQUEST['category']);
-        $user = $_SESSION['user'];
-        $img = sanitize($_FILES['image']);
-        $file = $_FILES['image'];
-        addPost($title, $img, $content, $category, $user->id);
-        $path = dirname(dirname(__FILE__)) . '/asset/img/';
-        var_dump($path);
-        $res = move_uploaded_file($file['tmp_name'], $path);
-        include(__DIR__.'/../View/post.php');
+        if(isset($_SESSION['user'])) {
+            $title = sanitize($_POST['title']);
+            $content = sanitize($_POST['content']);
+            $category = sanitize($_POST['category']);
+            $user = $_SESSION['user'];
+            $img = sanitize($_FILES['image']);
+            $file = $_FILES['image'];
+            addPost($title, $img, $content, $category, $user->id);
+            $path = dirname(dirname(__FILE__)) . '/asset/img/';
+            var_dump($path);
+            $res = move_uploaded_file($file['tmp_name'], $path);
+            include(__DIR__.'/../View/post.php');
+        }
+        if(!isset($_SESSION['user'])){
+            include (__DIR__.'/../View/connection.php');
+        }
+        break;
+
+    case 'deletepost':
+        if(isset($_SESSION['user'])) {
+            $idPost = sanitize($_POST['idPost']);
+            deletePost($idPost);
+            if (getLedgitPage($_GET['page'])) {
+                $page = intval($_GET['page']);
+            }
+            if (!getLedgitPage($_GET['page'])) {
+                $page = 1;
+            }
+            $nbpages = ceil(getNbPosts() / 10);
+            $posts = getPosts($page);
+            include(__DIR__ . '/../View/post.php');
+        }
+        if(!isset($_SESSION['user'])){
+            include (__DIR__.'/../View/connection.php');
+        }
         break;
 
     case 'addcomment';
         if(isset($_SESSION['user'])){
             $user = $_SESSION['user'];
-            $content = sanitize($_REQUEST['content']);
-            $idPost = sanitize($_REQUEST['idPost']);
+            $content = sanitize($_POST['content']);
+            $idPost = sanitize($_POST['idPost']);
             addComment($content, $idPost, $user->id);
             $comments = getComments($idPost);
             $postv = getPostById($idPost);

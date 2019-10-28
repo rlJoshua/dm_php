@@ -95,27 +95,31 @@ function getCategories(){
 
 function addPost($title, $img, $content, $category, $idUser){
     $pdo = connectPdo();
-    $img = getPathimage($img);
+    $imagePath = addImagePath($img['name']);
+    $path = dirname(dirname(__FILE__)) . '/asset/img';
     try{
         $db = $pdo->prepare("insert into posts (imagePath, title, content, idCategory, idUser) values
         (:imagePath, :title, :content, :idCategory, :idUser)");
-        $db->execute([':imagePath' => $img, ':title' => $title, ':content'=>$content, ':idCategory'=>$category, ':idUser'=>$idUser]);
+        $db->execute([':imagePath' => $imagePath, ':title' => $title, ':content'=>$content, ':idCategory'=>$category, ':idUser'=>$idUser]);
     }catch (PDOException $e){
         echo "Erreur de connection". $e->getMessage();
     }
-    $path = __DIR__.'/../asset/img/';
-    move_uploaded_file($img, $path);
+    move_uploaded_file($img['tmp_name'], $path."/".$imagePath);
 }
 
-function getPathimage($image){
+function addImagePath($image){
     $pdo = connectPdo();
+    $path = dirname(dirname(__FILE__)) . '/asset/img';
     try{
-        $db = $pdo->prepare(" SELECT imagePath FROM posts");
+        $db = $pdo->prepare("SELECT max(id) imagePath FROM posts ORDER by id DESC");
         $db->execute();
         $req = $db->fetch(PDO::FETCH_OBJ);
         $exp = explode("/",$req->imagePath);
         $id = $exp[0] + 1;
-        $img=$id."/".$image;
+        if(!is_dir($path."/".$id)){
+            mkdir($path."/".$id);
+        }
+        $img = $id."/".$image;
         return $img;
     }catch (PDOException $e){
         echo "Erreur de connection". $e->getMessage();
@@ -204,19 +208,90 @@ function setPassword($id, $password, $conf_pass){
     }
 }
 
-function setPost($title, $content, $category, $idPost){
+function setPost($title, $image, $content, $category, $idPost){
     $pdo = connectPdo();
+    $imagePath = getImagePath($idPost);
+    if(!empty($image['name'])){
+        $imagePath = getImageNewPath($idPost, $image['name']);
+    }
+
+    $path = dirname(dirname(__FILE__)) . '/asset/img';
 
     try{
         $db = $pdo->prepare("update posts 
-        set posts.title = :title, posts.content = :content, posts.idCategory = :category
+        set posts.title = :title, posts.imagePath = :image, posts.content = :content, posts.idCategory = :category
         where posts.id = :idPost");
-        $db->execute([':title' => $title, ':content'=>$content, ':category'=>$category, ':idPost'=>$idPost]);
-        $post = getPostById($idPost);
-        return $post;
+        $db->execute([':title' => $title, ':image'=>$imagePath, ':content'=>$content, ':category'=>$category, ':idPost'=>$idPost]);
     }catch (PDOException $e){
         echo "Erreur de connection". $e->getMessage();
     }
+    $post = getPostById($idPost);
+    move_uploaded_file($image['tmp_name'], $path."/".$imagePath);
+    return $post;
+}
+
+function getImagePath($idPost){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("SELECT imagePath FROM posts where posts.id = :id");
+        $db->execute([':id'=>$idPost]);
+        $req = $db->fetch(PDO::FETCH_OBJ);
+        $img = $req->imagePath;
+        return $img;
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+
+}
+
+function getImageNewPath($idPost, $image){
+    $pdo = connectPdo();
+    $path = dirname(dirname(__FILE__)) . '/asset/img';
+    try{
+        $db = $pdo->prepare("SELECT imagePath FROM posts where posts.id = :id");
+        $db->execute([':id'=>$idPost]);
+        $req = $db->fetch(PDO::FETCH_OBJ);
+        $exp = explode("/",$req->imagePath);
+        $id = $exp[0];
+        if(is_dir($path."/".$id)){
+            $files = dirToArray($path."/".$id);
+            foreach ($files as $file){
+                unlink($path."/".$id."/".$file);
+            }
+        }
+        if(!is_dir($path."/".$id)){
+            mkdir($path."/".$id);
+        }
+
+        $img = $id."/".$image;
+        return $img;
+    }catch (PDOException $e){
+        echo "Erreur de connection". $e->getMessage();
+    }
+
+}
+
+function dirToArray($dir) {
+
+    $result = array();
+
+    $cdir = scandir($dir);
+    foreach ($cdir as $key => $value)
+    {
+        if (!in_array($value,array(".","..")))
+        {
+            if (is_dir($dir . DIRECTORY_SEPARATOR . $value))
+            {
+                $result[$value] = dirToArray($dir . DIRECTORY_SEPARATOR . $value);
+            }
+            else
+            {
+                $result[] = $value;
+            }
+        }
+    }
+
+    return $result;
 }
 
 function getNbPosts(){

@@ -54,7 +54,8 @@ switch ($action) {
             $content = sanitize($_POST['content']);
             $category = sanitize($_POST['category']);
             $idPost = sanitize($_POST['idPost']);
-            $postv = setPost($title, $content, $category, $idPost);
+            $img = $_FILES['image'];
+            $postv = setPost($title, $img, $content, $category, $idPost);
             $authorize = getAuthorize($user->id, $postv->idUser);
             $comments = getComments($postv->id);
             include(__DIR__ . '/../View/post.php');
@@ -81,12 +82,16 @@ switch ($action) {
             $content = sanitize($_POST['content']);
             $category = sanitize($_POST['category']);
             $user = $_SESSION['user'];
-            $img = sanitize($_FILES['image']);
-            $file = $_FILES['image'];
+            $img = $_FILES['image'];
             addPost($title, $img, $content, $category, $user->id);
-            $path = dirname(dirname(__FILE__)) . '/asset/img/';
-            var_dump($path);
-            $res = move_uploaded_file($file['tmp_name'], $path);
+            if(getLedgitPage($_GET['page'])){
+                $page = intval($_GET['page']);
+            }
+            if(!getLedgitPage($_GET['page'])){
+                $page = 1;
+            }
+            $nbpages = ceil(getNbPosts()/10);
+            $posts = getPosts($page);
             include(__DIR__.'/../View/post.php');
         }
         if(!isset($_SESSION['user'])){
@@ -129,9 +134,4 @@ switch ($action) {
         }
         break;
 }
-
-
-
-
-
 

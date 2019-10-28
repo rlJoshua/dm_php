@@ -23,6 +23,8 @@
     </select>
     <br />
     <br />
+    <input type="file" name="image" accept=".jpg, .jpeg, .png"/>
+    <br />
     <input type="hidden" value="<?php echo $post->id?>" name="idPost">
     <input class="i-sub" type="submit" value="Modifier l'article">
 </form>

@@ -12,8 +12,6 @@ if (isset($_SERVER['REQUEST_URI'])) {
     $request = $request[0];
 }
 
-
-
 switch ($request){
     case '/posts':
         include('Controler/postsControler.php');

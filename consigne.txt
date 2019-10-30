@@ -5,4 +5,10 @@ Voici mon projet php terminé. Pour la base de donnée, il faudrait installé le
 Par manque d'inspiration j'ai dû dupliqué un article afin d'atteindre un nombre surpérieur à 10, 
 pour la pagination des articles. 
 
+les log pour la base de données et le compte admin sont :
+
+- user: admin
+- pwd : skywalk
+
+
 En espérant avoir remplie toute les consignes que vous avez demander.

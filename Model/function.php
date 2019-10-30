@@ -188,6 +188,25 @@ function getPosts($page){
 }
 
 /**
+ * @param $idUser
+ * @return array
+ */
+function getUserPosts($idUser){
+    $pdo = connectPdo();
+    try{
+        $db = $pdo->prepare("select posts.id, posts.imagePath, posts.title, posts.content, idCategory, 
+        categories.name as categoryname, idUser, users.username  as username
+        from posts LEFT JOIN categories on posts.idCategory = categories.id 
+        LEFT JOIN users on idUser = users.id WHERE idUser= :idUser ORDER BY posts.id DESC");
+        $db->execute([':idUser'=>$idUser]);
+        $posts = $db->fetchALL(PDO::FETCH_OBJ);
+        return $posts;
+    }catch (PDOException $e){
+        echo"Erreur de connexion". $e->getMessage();
+    }
+
+}
+/**
  * @param $id
  * @return object
  */
@@ -315,6 +334,9 @@ function getImageNewPath($idPost, $image){
         $req = $db->fetch(PDO::FETCH_OBJ);
         $exp = explode("/",$req->imagePath);
         $id = $exp[0];
+        if($id === ""){
+            $id = $idPost;
+        }
         if(is_dir($path."/".$id)){
             $files = dirToArray($path."/".$id);
             foreach ($files as $file){

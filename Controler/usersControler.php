@@ -12,6 +12,7 @@ switch ($action) {
     case 'profil':
         if(isset($_SESSION['user'])){
             $user = $_SESSION['user'];
+            $posts = getUserPosts($user->id);
             include (__DIR__.'/../View/profil.php');
         }
         if(isset($_POST['user'])){

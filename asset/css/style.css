@@ -24,3 +24,5 @@ textarea{resize: none; height: 250px;}
 .p-pagination{margin: auto; width: fit-content;}
 .sub-del{background-color: #A93226}
 .sub-del a {width: min-content}
+.l-img{width: 150px; float: left; display: inline-block; margin-bottom: 20px; margin-right: 20px;}
+.l-content{text-overflow: ellipsis; overflow : hidden; height: 25px; }

@@ -1,3 +1,8 @@
-fail XSS, CRCF
+Bonjour, 
 
-Bootstrap, Materialize
+Voici mon projet php terminé. Pour la base de donnée, il faudrait installé le script situant dans le projet.
+
+Par manque d'inspiration j'ai dû dupliqué un article afin d'atteindre un nombre surpérieur à 10, 
+pour la pagination des articles. 
+
+En espérant avoir remplie toute les consignes que vous avez demander.

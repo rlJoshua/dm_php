@@ -1,3 +1,6 @@
+<?php
+    include ('view/header.php');
+?>
 <title>Blog - Posts</title>
 
 
@@ -56,6 +59,9 @@
                     echo "<div class='comment'>";
                     echo "<div class='p-content'>$comment->content</div>";
                     echo "<div class='p-username'>De $comment->username</div>";
+                    if(getAuthorize($user->id, $comment->idUser)){
+                        ?><a class='p-link' href=<?php echo "/posts?ac=deletecomment&id=$comment->id"?> >Supprimer</a><?php
+                    }
                     echo "</div>";
                 }
             }

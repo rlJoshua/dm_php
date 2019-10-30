@@ -20,7 +20,8 @@ switch ($action) {
             connection($username, $password);
             $user = $_SESSION['user'];
             if($user){
-                include (__DIR__.'/../View/profil.php');
+                header('Location: /user?ac=profil');
+                exit();
             }
             if(!$user){
                 $error = "Login ou mot de passe incorrect";
@@ -31,7 +32,8 @@ switch ($action) {
 
     case 'logout':
         unset($_SESSION['user']);
-        include(__DIR__.'/../View/connection.php');
+        header('Location: /user?ac=login');
+        exit();
         break;
 
     case 'adduser':
@@ -44,8 +46,9 @@ switch ($action) {
         $conf_pass = sanitize($_POST['conf_pass']);
         $add = addUser($username, $password, $conf_pass);
         if ($add['create']){
-            $error = "Utilisateur ajouté ! Connecter-vous !";
-            include (__DIR__.'/../View/connection.php');
+            connection($username, $password);
+            header('Location: /user?ac=profil');
+            exit();
         }
         if (!$add['create']){
             $error = $add['message'];
@@ -59,7 +62,8 @@ switch ($action) {
             include (__DIR__.'/../View/setuser.php');
         }
         if(!isset($_SESSION['user'])){
-            include (__DIR__.'/../View/connection.php');
+            header('Location: /user?ac=login');
+            exit();
         }
         break;
 
@@ -69,7 +73,8 @@ switch ($action) {
             $username = sanitize($_POST['login']);
             $set = setLogin($user->id, $username);
             if ($set['create']) {
-                include(__DIR__ . '/../View/profil.php');
+                header('Location: /user?ac=profil');
+                exit();
             }
             if (!$set['create']) {
                 $errorlogin = $set['message'];
@@ -77,7 +82,8 @@ switch ($action) {
             }
         }
         if(!isset($_SESSION['user'])){
-            include (__DIR__.'/../View/connection.php');
+            header('Location: /user?ac=login');
+            exit();
         }
         break;
 
@@ -88,7 +94,8 @@ switch ($action) {
             $conf_pass = sanitize($_POST['conf_pass']);
             $set = setPassword($user->id, $password, $conf_pass);
             if ($set['create']){
-                include (__DIR__.'/../View/profil.php');
+                header('Location: /user?ac=profil');
+                exit();
             }
             if (!$set['create']){
                 $errorpass = $set['message'];
@@ -96,7 +103,8 @@ switch ($action) {
             }
         }
         if(!isset($_SESSION['user'])){
-            include (__DIR__.'/../View/connection.php');
+            header('Location: /user?ac=login');
+            exit();
         }
 }
 

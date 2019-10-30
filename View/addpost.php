@@ -1,3 +1,6 @@
+<?php
+    include ('view/header.php');
+?>
 <title>Blog - Posts</title>
 <div class="title" xmlns="http://www.w3.org/1999/html">Ajouter un article</div>
 

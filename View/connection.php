@@ -1,3 +1,6 @@
+<?php
+    include ('view/header.php');
+?>
 <title>Blog - Connection</title>
 <div class="title">Connexion</div>
 <form action="/user?ac=profil" method="post">

@@ -1,3 +1,6 @@
+<?php
+    include ('view/header.php');
+?>
 <div class="title" xmlns="http://www.w3.org/1999/html">Modifier votre Nom d'utilisateur</div>
 <form class="i-form" action="/user?ac=setlogin" id="setlogin" method="post">
     <label for="login">Nouveau nom d'utilisateur</label><br />

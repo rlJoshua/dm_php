@@ -3,14 +3,16 @@ if(PHP_SESSION_NONE === session_status()){
     session_start();
 }
 
-include ('view/header.php');
-
 $request = '/';
 
 if (isset($_SERVER['REQUEST_URI'])) {
     $request = explode('?', $_SERVER['REQUEST_URI']);
     $request = $request[0];
 }
+if($request === '/'){
+    $request = '/posts';
+}
+
 
 switch ($request){
     case '/posts':
@@ -20,9 +22,11 @@ switch ($request){
     case '/user':
         include('Controler/usersControler.php');
         break;
+
     case '/admin':
         include('Controler/adminControler.php');
         break;
+
 }
 
 

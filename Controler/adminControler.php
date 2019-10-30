@@ -5,19 +5,15 @@ $user = $_SESSION['user'];
 $authorize = getAuthorize($user->id, 1);
 
 if(!$authorize){
-    $action = 'post';
+    header('Location: /posts?ac=display');
+    exit();
 }
 
 switch ($action) {
 
     case 'category':
         if($authorize){
-            if(isset($_POST['id'])){
-                $id = sanitize($_POST['id']);
-                $name = getCategoryNameById($id);
-                deleteCategory($id);
-                $message = "La catégorie $name à été supprimé !";
-            }
+
             $categories = getCategories();
             include(__DIR__.'/../View/category.php');
         }
@@ -27,8 +23,8 @@ switch ($action) {
         if($authorize){
             $name = sanitize($_POST['name']);
             addCategory($name);
-            $categories = getCategories();
-            include(__DIR__.'/../View/category.php');
+            header('Location: /admin?ac=category');
+            exit();
         }
         break;
 
@@ -37,23 +33,25 @@ switch ($action) {
             $id = sanitize($_POST['idcat']);
             $name = sanitize($_POST['namecat']);
             setCategory($id, $name);
-            $categories = getCategories();
-            include(__DIR__.'/../View/category.php');
+            header('Location: /admin?ac=category');
+            exit();
         }
         break;
 
-    case 'post':
-        if(getLedgitPage($_GET['page'])){
-            $page = intval($_GET['page']);
+    case "deletecategory":
+        if($authorize){
+            if(isset($_GET['id'])){
+                $id = sanitize($_GET['id']);
+                $name = getCategoryNameById($id);
+                deleteCategory($id);
+                header('Location: /admin?ac=category');
+                exit();
+            }
+            if(!isset($_GET['id'])){
+                header('Location: /admin?ac=category');
+                exit();
+            }
         }
-        if(!getLedgitPage($_GET['page'])){
-            $page = 1;
-        }
-        $posts = getPosts($page);
-        $nbpages = ceil(getNbPosts()/10);
-        include(__DIR__.'/../View/post.php');
-        break;
-
 }
 
 
